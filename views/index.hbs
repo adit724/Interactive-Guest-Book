@@ -1,0 +1,51 @@
+<div class="container my-5 flex-grow-1">
+    <div class="row g-4">
+        
+        <div class="col-lg-4 col-md-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary-custom text-white fw-bold py-3">
+                    Leave Message
+                </div>
+                <div class="card-body p-4">
+                    <form id="guestbook-form">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label fw-semibold text-secondary">Full Name</label>
+                            <input type="text" class="form-control py-2" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="form-label fw-semibold text-secondary">Message</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Write your message here" required></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn" class="btn btn-primary-custom w-100 py-2 fw-bold text-white">Submit Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-7">
+            <div class="card p-4 shadow-sm h-100 border-0">
+                <h5 class="text-secondary border-bottom pb-3 mb-4">New Messages</h5>
+                
+                <div class="row g-3" id="messages-container">
+                    {{#each dataPesan}}
+                    <div class="col-sm-6">
+                        <div class="card card-custom p-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-person-circle text-primary fs-4 me-2"></i>
+                                <span class="fw-bold text-primary">{{this.name}}</span>
+                            </div>
+                            <p class="mb-0 text-muted small">{{this.text}}</p>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="col-12 text-center text-muted py-5" id="no-message-empty">
+                        <p>Belum ada pesan. Jadi yang pertama mengirim pesan!</p>
+                    </div>
+                    {{/each}}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
