@@ -1,60 +1,70 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    const guestForm = document.getElementById('guestbook-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const messagesContainer = document.getElementById('messages-container');
-    const emptyNotice = document.getElementById('no-message-empty');
+    const expenseForm = document.getElementById('expense-form');
+    const inputExpenseName = document.getElementById('expenseName');
+    const inputExpenseAmount = document.getElementById('expenseAmount');
+    const expenseTableBody = document.getElementById('expense-list');
+    const totalBadge = document.getElementById('total-expense');
 
-    console.log("Form ditemukan:", guestForm);
+    let arrayPengeluaran = JSON.parse(localStorage.getItem('myExpensesData')) || [];
 
-    // Fungsi utama untuk memproses pesan baru
-    function prosesPesan(event) {
-       
-        event.preventDefault();
-        event.stopPropagation(); 
-        
-        console.log("Sistem pencegah reload berjalan sukses!");
+    function renderKeLayar() {
+        expenseTableBody.innerHTML = '';
+        let hitungTotal = 0;
 
-        const inputName = document.getElementById('fullName').value;
-        const inputMessage = document.getElementById('message').value;
-
-        // Validasi opsional agar tidak memasukkan data kosong
-        if (!inputName.trim() || !inputMessage.trim()) return;
-
-        const cardTemplate = `
-            <div class="col-sm-6">
-                <div class="card card-custom p-3">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="bi bi-person-circle text-primary fs-4 me-2"></i>
-                        <span class="fw-bold text-primary">${inputName}</span>
-                    </div>
-                    <p class="mb-0 text-muted small">${inputMessage}</p>
-                </div>
-            </div>
-        `;
-
-        if (emptyNotice) {
-            emptyNotice.remove();
+        if (arrayPengeluaran.length === 0) {
+            expenseTableBody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-5">
+                        <i class="bi bi-emoji-slight-smile d-block fs-2 mb-2"></i> Belum ada data pengeluaran saat ini.
+                    </td>
+                </tr>
+            `;
+            totalBadge.textContent = 'Total: Rp 0';
+            return;
         }
 
-        if (messagesContainer) {
-            messagesContainer.insertAdjacentHTML('afterbegin', cardTemplate);
-            console.log("Pesan berhasil dirender ke layar!");
-        }
+        arrayPengeluaran.forEach((item, index) => {
+            hitungTotal += parseInt(item.amount);
 
-        // Kosongkan form kembali
-        guestForm.reset();
-    }
+            const rowHTML = `
+                <tr>
+                    <td class="fw-bold text-secondary">${index + 1}</td>
+                    <td class="fw-semibold">${item.name}</td>
+                    <td class="text-danger fw-bold">Rp ${parseInt(item.amount).toLocaleString('id-ID')}</td>
+                </tr>
+            `;
 
-    if (guestForm) {
-        guestForm.addEventListener('submit', prosesPesan);
-    }
-
-    if (submitBtn) {
-        submitBtn.addEventListener('click', function(e) {
-            if (guestForm.checkValidity()) {
-                prosesPesan(e);
-            }
+            expenseTableBody.insertAdjacentHTML('beforeend', rowHTML);
         });
+
+        
+        totalBadge.textContent = `Total: Rp ${hitungTotal.toLocaleString('id-ID')}`;
     }
+
+    renderKeLayar();
+
+    expenseForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const namaValue = inputExpenseName.value.trim();
+        const nominalValue = inputExpenseAmount.value.trim();
+
+        if (namaValue === '' || nominalValue === '') {
+            alert('Aduh Jon! Tolong isi semua kolom (Nama & Nominal) dulu ya, jangan dikosongkan.');
+            return; 
+        }
+
+        const dataBaruObject = {
+            name: namaValue,
+            amount: nominalValue
+        };
+        arrayPengeluaran.push(dataBaruObject);
+
+        localStorage.setItem('myExpensesData', JSON.stringify(arrayPengeluaran));
+
+        renderKeLayar();
+
+        expenseForm.reset();
+    });
 });
