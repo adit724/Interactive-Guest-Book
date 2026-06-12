@@ -1,53 +1,40 @@
 <div class="container my-5 flex-grow-1">
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
         
-        <div class="col-lg-4 col-md-5">
+        <div class="col-lg-10">
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-danger text-white fw-bold py-3">
-                    <i class="bi bi-wallet2 me-2"></i>Catat Pengeluaran
+                <div class="card-header bg-dark text-white fw-bold py-3 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-speedometer2 me-2"></i>Student Data Dashboard</span>
+                    <span class="badge bg-primary fs-6 p-2" id="avg-score-badge">Rata-rata Nilai: 0</span>
                 </div>
                 <div class="card-body p-4">
-                    <form id="expense-form">
-                        <div class="mb-3">
-                            <label for="expenseName" class="form-label fw-semibold text-secondary">Nama Pengeluaran</label>
-                            <input type="text" class="form-control py-2" id="expenseName" placeholder="Contoh: Makan Siang">
-                        </div>
-                        <div class="mb-4">
-                            <label for="expenseAmount" class="form-label fw-semibold text-secondary">Nominal (Harga)</label>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="searchStudent" class="form-label fw-semibold text-secondary">Cari Nama Siswa</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light text-secondary fw-semibold">Rp</span>
-                                <input type="number" class="form-control py-2" id="expenseAmount" placeholder="Contoh: 35000">
+                                <span class="input-group-text bg-light text-secondary"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control py-2" id="searchStudent" placeholder="Ketik nama siswa di sini...">
                             </div>
                         </div>
-                        <button type="submit" id="submit-expense-btn" class="btn btn-danger w-100 py-2 fw-bold text-white shadow-sm">
-                            <i class="bi bi-plus-lg me-1"></i> Simpan Data
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+                    </div>
 
-        <div class="col-lg-8 col-md-7">
-            <div class="card p-4 shadow-sm h-100 border-0">
-                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
-                    <h5 class="text-secondary mb-0 fw-bold"><i class="bi bi-clippy me-2"></i>Riwayat Log</h5>
-                    <span class="badge bg-danger fs-6 p-2 shadow-sm" id="total-expense">Total: Rp 0</span>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col" style="width: 10%">No</th>
-                                <th scope="col" style="width: 50%">Nama Pengeluaran</th>
-                                <th scope="col" style="width: 40%">Nominal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="expense-list">
-                            </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" style="width: 10%">No</th>
+                                    <th scope="col" style="width: 45%">Nama Siswa</th>
+                                    <th scope="col" style="width: 25%">Kelas</th>
+                                    <th scope="col" style="width: 20%">Nilai (Score)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-list">
+                                </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
         </div>
 
